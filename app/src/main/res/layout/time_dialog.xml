@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请选择日期和时间"
+        />
+
+    <!-- 定义一个TimePicker组件 -->
+
+    <TimePicker android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"> </TimePicker>
+
+    <Button
+        android:id="@+id/time_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="确定"
+        />
+
+
+</LinearLayout>

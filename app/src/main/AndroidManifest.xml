@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.myapplication5">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--支付宝-->
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+
+
+
+
+    <application
+
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="停车"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        >
+
+
+        <activity android:name="com.example.myapplication5.MainActivity">
+
+        </activity>
+        <activity android:name="com.example.myapplication5.LoadActivity">
+
+        </activity>
+        <activity android:name="com.example.myapplication5.PoiBoundSearchi"></activity>
+        <activity android:name="com.example.myapplication5.MarkActivity"></activity>
+        <activity android:name="com.example.myapplication5.GeoCoderDemo"></activity>
+        <activity android:name="com.example.myapplication5.just"></activity>
+        <activity android:name="com.example.myapplication5.TEST"></activity>
+        <activity android:name="com.example.myapplication5.sa"></activity>
+        <activity android:name="com.example.myapplication5.DrivingRoutSearch1" android:label="搜索"></activity>
+        <activity android:name="com.example.myapplication5.DrivingRouteSearchDemo"
+            android:label="搜索"></activity>
+        <activity android:name="com.example.myapplication5.registerActivity"></activity>
+        <activity android:name="com.example.myapplication5.messageActivity"></activity>
+        <activity android:name="com.example.myapplication5.myActivity"></activity>
+        <activity android:name="com.example.myapplication5.timeChooseActivity"></activity>
+        <activity android:name="com.example.myapplication5.MarkerDemo"></activity>
+        <activity android:name="com.example.myapplication5.PayDemoActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+
+        </activity>
+
+        <activity android:name="com.example.myapplication5.firstActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+        <activity android:name="com.example.myapplication5.updataActivity"></activity>
+        <activity android:name="com.example.myapplication5.orderActivity"
+            android:label="我的订单"></activity>
+
+
+
+
+
+
+
+        <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v5.0.0"/>
+            </intent-filter>
+
+        </service>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="PCxXDdAvI7fQ1MWBx30Q3uKSGur1XAue" />
+    </application>
+
+</manifest>

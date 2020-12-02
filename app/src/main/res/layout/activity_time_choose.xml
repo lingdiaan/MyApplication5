@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="开始时间:"
+            android:layout_gravity="center_horizontal"
+            ></TextView>
+    <EditText
+        android:layout_marginLeft="70dp" android:id="@+id/edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:cursorVisible="false"
+        /></RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="结束时间:"
+            android:layout_gravity="center_horizontal"
+            ></TextView>
+        <EditText
+            android:layout_marginLeft="70dp"
+            android:id="@+id/edit2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:cursorVisible="false"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="车牌号:"
+            android:layout_gravity="center_horizontal"
+            ></TextView>
+        <EditText
+            android:layout_marginLeft="70dp"
+            android:id="@+id/car_num"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="预定状态:"
+            android:layout_gravity="center_horizontal"
+            ></TextView>
+        <Spinner
+            android:layout_marginLeft="100dp"
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/tijiao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确定">
+
+    </Button>
+
+
+
+</LinearLayout>

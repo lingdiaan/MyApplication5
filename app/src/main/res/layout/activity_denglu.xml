@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:background="@mipmap/ic_launcher"
+        android:layout_marginTop="80dp"></ImageView>
+    <RelativeLayout
+        android:layout_marginLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="282dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/edit_background"
+                android:hint="  userName"
+                android:textSize="20dp"></EditText>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/psw"
+                android:layout_width="282dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:hint="  passWord"
+                android:background="@drawable/edit_background"
+                android:inputType="textPassword"
+                android:textSize="20dp"></EditText>
+            <Button
+                android:id="@+id/change"
+                android:layout_width="20dp"
+                android:layout_height="20dp"></Button>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="80dp"
+        android:layout_width="266dp"
+        android:layout_height="69dp"
+        android:layout_marginLeft="60dp">
+
+        <Button
+            android:id="@+id/denglu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+
+            android:background="@drawable/edit_background"
+            android:text="登录"
+            android:textSize="15dp"></Button>
+
+        <Button
+            android:id="@+id/zhuce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_background"
+            android:text="注册"
+            android:textSize="15dp"></Button>
+    </LinearLayout>
+
+</LinearLayout>

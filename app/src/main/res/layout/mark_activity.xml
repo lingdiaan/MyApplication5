@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/bt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示"></Button>
+    <TextView
+        android:id="@+id/tiankong"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"></TextView>
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/dituView"
+        android:layout_width="fill_parent"
+        android:layout_height="500dp"
+        android:clickable="true"></com.baidu.mapapi.map.MapView>
+
+    <RelativeLayout
+        android:id="@+id/poi_detail"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:visibility="gone">
+
+        <ListView
+            android:id="@+id/poi_list"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

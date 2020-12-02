@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/images"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"></ImageView>
+    <RelativeLayout
+        android:layout_marginTop="00dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/fir"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="姓名:"
+                android:textSize="20dp"></TextView>
+            <EditText
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_background"
+                ></EditText></LinearLayout>
+        <LinearLayout
+            android:layout_below="@+id/fir"
+            android:layout_marginTop="10dp"
+            android:id="@+id/sec"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="号码:"
+                android:textSize="20dp"></TextView>
+            <EditText
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_background"
+                ></EditText>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@+id/sec"
+            android:layout_marginTop="10dp"
+            android:id="@+id/thi"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="车牌号:"
+                android:textSize="20dp"></TextView>
+            <EditText
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/num"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_background"
+                ></EditText>
+
+        </LinearLayout> <LinearLayout
+        android:layout_below="@+id/thi"
+        android:layout_marginTop="10dp"
+        android:id="@+id/four"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="性别:"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_background"
+            ></EditText>
+
+    </LinearLayout> <LinearLayout
+        android:layout_below="@+id/four"
+        android:layout_marginTop="10dp"
+        android:id="@+id/five"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="邮箱:"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_background"
+            ></EditText>
+
+    </LinearLayout> <LinearLayout
+        android:layout_below="@+id/five"
+        android:layout_marginTop="10dp"
+        android:id="@+id/six"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="生日:"
+            android:textSize="20dp"></TextView>
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/birth"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:text=""
+            android:textSize="20dp"
+
+
+            ></TextView>
+
+    </LinearLayout>
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="450dp"
+            android:layout_marginLeft="150dp"
+            android:text="提交"
+            android:background="@drawable/edit_background"
+            ></Button>
+    </RelativeLayout>
+
+</LinearLayout>
