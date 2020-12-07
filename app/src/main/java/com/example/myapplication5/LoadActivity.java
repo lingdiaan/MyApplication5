@@ -141,6 +141,7 @@ public class LoadActivity extends AppCompatActivity {
                         Intent intent2 = new Intent(LoadActivity.this, GeoCoderDemo.class);
                         startActivity(intent2);
                         call.cancel();
+                        finish();
                     }
                     //JSONArray results = jsonObject.getJSONArray("non_field_errors");
                     //logReturn=results.getString(0);

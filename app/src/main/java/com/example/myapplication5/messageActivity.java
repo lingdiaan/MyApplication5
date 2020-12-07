@@ -123,7 +123,10 @@ public class messageActivity extends AppCompatActivity {
         public void run() {
 //更新界面
             string = Rbirth.split("-");
+
+            if(string.length>5)
             birthday = string[0]+"-"+string[1]+"-"+string[2];
+            else birthday = "2000-01-01";
             name.setText(Rname);
             tel.setText(Rtel);
             num.setText(Rnum);

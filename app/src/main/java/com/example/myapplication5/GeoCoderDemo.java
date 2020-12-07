@@ -1,8 +1,11 @@
 package com.example.myapplication5;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,7 +53,6 @@ import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.myapplication5.clusterutil.clustering.Cluster;
 import com.example.myapplication5.clusterutil.clustering.ClusterManager;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -397,6 +399,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         public void onReceiveLocation(BDLocation location) {
             // map view 销毁后不在处理新接收的位置
             if (location == null ||  mMapView == null) {
+                Toast.makeText(GeoCoderDemo.this,"未打开定位权限",Toast.LENGTH_SHORT).show();
                 return;
             }
             MyLocationData locData = new MyLocationData.Builder()
@@ -589,6 +592,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         mMapView.onDestroy();
 //        mSuggestionSearch.destroy();
     }
+
 
 
 

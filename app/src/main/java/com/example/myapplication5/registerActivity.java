@@ -123,7 +123,9 @@ public class registerActivity extends AppCompatActivity {
                     Toast.makeText(registerActivity.this,"请输入正确的号码",Toast.LENGTH_LONG).show();
                     return;
 
-                }
+                }else if(ctest==null){
+                    Toast.makeText(registerActivity.this,"验证码不能为空",Toast.LENGTH_SHORT).show();
+                 }
                 else  {
                     HashMap<String,String> mapuse=new HashMap<>();
                     mapuse.put("username",ctel);
