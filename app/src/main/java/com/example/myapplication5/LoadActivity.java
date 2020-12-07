@@ -83,7 +83,7 @@ public class LoadActivity extends AppCompatActivity {
             }
             else {
                 okhttpSend(Cusername,Cupsw);
-                finish();
+
 
                 }
         });
@@ -140,13 +140,19 @@ public class LoadActivity extends AppCompatActivity {
                         Toast.makeText(LoadActivity.this,token,Toast.LENGTH_LONG).show();
                         Intent intent2 = new Intent(LoadActivity.this, GeoCoderDemo.class);
                         startActivity(intent2);
+                        call.cancel();
                     }
                     //JSONArray results = jsonObject.getJSONArray("non_field_errors");
                     //logReturn=results.getString(0);
-                    else{JSONArray results = jsonObject.getJSONArray("non_field_errors");
+                    else{
+
+                        JSONArray results = jsonObject.getJSONArray("non_field_errors");
                         logReturn=results.getString(0);
 
-                        Toast.makeText(LoadActivity.this,logReturn,Toast.LENGTH_LONG).show();}
+                        Toast.makeText(LoadActivity.this,logReturn,Toast.LENGTH_LONG).show();
+                        call.cancel();
+                        Looper.loop();
+                        }
 
 
 

@@ -24,7 +24,9 @@ public class myActivity extends AppCompatActivity {
                 UserManage.getInstance().deleteUserInfo(myActivity.this);
                 Intent intent= new Intent(myActivity.this,LoadActivity.class);
                 startActivity(intent);
+                GeoCoderDemo.geoCoderDemo.finish();
                 finish();
+
 
             }
         });

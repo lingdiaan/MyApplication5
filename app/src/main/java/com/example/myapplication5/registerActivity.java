@@ -3,6 +3,7 @@ package com.example.myapplication5;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -34,18 +35,21 @@ public class registerActivity extends AppCompatActivity {
     private TextView psw,tel,pswsure,text;
     private Button sub;
     private static String cpsw,ctel,cpswsure,ctest;
-    private Button btn;
+    private Button btn,change,changeSure;
     private String codeReturn,codeReturn1;
+    private boolean flag = false,flagSure = false;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        change = (Button)findViewById(R.id.change);
         psw = (TextView)findViewById(R.id.psw);
         pswsure = (TextView)findViewById(R.id.pswsure);
         tel = (TextView)findViewById(R.id.tel);
         sub = (Button)findViewById(R.id.submit);
         text=(TextView)findViewById(R.id.test);
         btn = (Button)findViewById(R.id.code);
+        changeSure = (Button)findViewById(R.id.changeSure) ;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +57,36 @@ public class registerActivity extends AppCompatActivity {
                 getcode(ctel);
             }
         });
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag){
+                    psw.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    flag = false;
+                }else{
+                    psw.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    flag = true;
+                }
+            }
+        });
+
+        changeSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flagSure){
+                    pswsure.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    flagSure = false;
+                }else{
+                    pswsure.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    flagSure = true;
+                }
+
+
+
+
+            }
+        });
+
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

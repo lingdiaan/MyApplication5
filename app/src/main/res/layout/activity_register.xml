@@ -55,7 +55,13 @@
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"></EditText></LinearLayout>
+        android:inputType="textPassword"
+        android:textSize="20dp"
+        ></EditText>
+            <Button
+                android:id="@+id/change"
+                android:layout_width="20dp"
+                android:layout_height="20dp"></Button></LinearLayout>
         <LinearLayout
             android:layout_marginTop="80dp"
             android:layout_width="wrap_content"
@@ -72,8 +78,12 @@
 
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-
-                android:textSize="20dp"></EditText></LinearLayout>
+                android:inputType="textPassword"
+                android:textSize="20dp"></EditText>
+            <Button
+                android:id="@+id/changeSure"
+                android:layout_width="20dp"
+                android:layout_height="20dp"></Button></LinearLayout>
         <LinearLayout
             android:layout_marginTop="120dp"
             android:layout_width="wrap_content"

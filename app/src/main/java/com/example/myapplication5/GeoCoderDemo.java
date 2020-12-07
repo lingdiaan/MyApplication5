@@ -101,6 +101,8 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
     private MapStatus mMapStatus;
     private ClusterManager<MyItem> mClusterManager;
     private String id;
+    public static GeoCoderDemo geoCoderDemo = null;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         setContentView(R.layout.activity_geocoder);
         CharSequence titleLable = "停车APP";
         setTitle(titleLable);
+        geoCoderDemo = this;
         mPoiSearch = PoiSearch.newInstance();
         mEditCity = (EditText) findViewById(R.id.city);
 //        mPoiSearch.setOnGetPoiSearchResultListener(this);
@@ -118,6 +121,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         my = (Button)findViewById(R.id.my);
         mEditGeoCodeKey = (AutoCompleteTextView) findViewById(R.id.geocodekey);
         mSugListView = (ListView) findViewById(R.id.sug_list);
+
 
 
 
@@ -330,6 +334,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
 
             }
         });
+        System.out.println(LoadActivity.token);
 //
     }
 
