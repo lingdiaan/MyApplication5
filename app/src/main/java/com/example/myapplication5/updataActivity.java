@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,6 +120,11 @@ public class updataActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String carnum = car.getText().toString().trim();
+                if(carnum.length()<7||ChineseNum(carnum)>1||ChineseNum(carnum)==0||AbcNum(carnum)==0){
+                    Toast.makeText(updataActivity.this,"请输入正确格式的车牌号",Toast.LENGTH_SHORT).show();
+
+                }
                 HashMap<String,String> map = new HashMap<>();
                 map.put("id","1");
                 map.put("name",name.getText().toString().trim());
@@ -172,6 +178,39 @@ public class updataActivity extends AppCompatActivity {
         birth = (TextView) findViewById(R.id.birth);
         email = (EditText)findViewById(R.id.email);
         car = (EditText)findViewById(R.id.num);
+    }
+
+    public static boolean isCHinese(char c){
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if(ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                ||ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                ||ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                ||ub == Character.UnicodeBlock.GENERAL_PUNCTUATION  // GENERAL_PUNCTUATION 判断中文的“号
+                ||ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION     // CJK_SYMBOLS_AND_PUNCTUATION 判断中文的。号
+                ||ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS    // HALFWIDTH_AND_FULLWIDTH_FORMS 判断中文的，号
+        )
+            return true;
+        return false;
+    }
+    public static int ChineseNum(String str){
+        char[] ch =  str.toCharArray();
+        int count = 0;
+        for (char c : ch) {
+            if(isCHinese(c))
+                count++;
+        }
+        return count;
+    }
+
+    public static int AbcNum(String str){
+        char[] ch = str.toCharArray();
+        int count = 0;
+        for(char c : ch){
+            if(c>'a'&&c<'z')
+                count++;
+
+
+        }return count;
     }
 
 

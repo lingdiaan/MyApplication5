@@ -234,6 +234,10 @@ public class timeChooseActivity extends Activity {
                     hour -=-1;
                     minute +=60;
                 }
+                else if(carnum.length()<7||ChineseNum(carnum)>1||ChineseNum(carnum)==0||AbcNum(carnum)==0){
+                    Toast.makeText(timeChooseActivity.this,"请输入正确格式的车牌号",Toast.LENGTH_SHORT).show();
+
+                }
                 else {
                 float hourf = (float)hour;
                 float mintf=(float)minute;
@@ -264,7 +268,7 @@ public class timeChooseActivity extends Activity {
                     mapReserved.put("trade_no",String.valueOf(trade_no));
                     mapReserved.put("id",String.valueOf(trade_no));
                     mapReserved.put("car_num",carnum);
-                    mapReserved.put("status",mSpinner.getSelectedItem().toString());
+                    mapReserved.put("status","outside");
                     mapReserved.put("in_time",edStart.getText().toString());
                     mapReserved.put("out_time",edEnd.getText().toString());
                     mapReserved.put("add_time", addTime);
@@ -283,15 +287,15 @@ public class timeChooseActivity extends Activity {
                 }
 //            }
         });
-        List<String> list = new ArrayList<>();
-        list.add("inside");
-        list.add("outside");
-        list.add("finish");
-        mSpinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_vict, list);
-        adapter.setDropDownViewResource(R.layout.spinner_item_vict);
-        mSpinner.setAdapter(adapter);
-    }
+//        List<String> list = new ArrayList<>();
+//        list.add("inside");
+//        list.add("outside");
+//        list.add("finish");
+//        mSpinner = (Spinner)findViewById(R.id.spinner);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_vict, list);
+//        adapter.setDropDownViewResource(R.layout.spinner_item_vict);
+//        mSpinner.setAdapter(adapter);
+}
 
 //    @SuppressLint("HandlerLeak")
 //    private Handler mHandler = new Handler() {
@@ -448,6 +452,17 @@ public class timeChooseActivity extends Activity {
                 count++;
         }
         return count;
+    }
+
+    public static int AbcNum(String str){
+        char[] ch = str.toCharArray();
+        int count = 0;
+        for(char c : ch){
+            if(c>'a'&&c<'z')
+                count++;
+
+
+        }return count;
     }
 
 

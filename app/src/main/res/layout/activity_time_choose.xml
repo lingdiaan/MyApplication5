@@ -59,25 +59,6 @@
             />
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/text"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="预定状态:"
-            android:layout_gravity="center_horizontal"
-            ></TextView>
-        <Spinner
-            android:layout_marginLeft="100dp"
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            />
-
-    </RelativeLayout>
 
     <Button
         android:id="@+id/tijiao"
