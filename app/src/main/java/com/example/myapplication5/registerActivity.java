@@ -95,6 +95,7 @@ public class registerActivity extends AppCompatActivity {
                 cpswsure = pswsure.getText().toString().trim();
                 ctel = tel.getText().toString().trim();
                 ctest = text.getText().toString().trim();
+                System.out.println(ctest+"++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
                  if(TextUtils.isEmpty(cpsw)){
                     Toast.makeText(registerActivity.this,"密码不能为空",Toast.LENGTH_LONG).show();
@@ -123,9 +124,10 @@ public class registerActivity extends AppCompatActivity {
                     Toast.makeText(registerActivity.this,"请输入正确的号码",Toast.LENGTH_LONG).show();
                     return;
 
-                }else if(ctest==null){
-                    Toast.makeText(registerActivity.this,"验证码不能为空",Toast.LENGTH_SHORT).show();
+                }else if(ctest.length()==0){
+                     Toast.makeText(registerActivity.this,"验证码不能为空",Toast.LENGTH_SHORT).show();
                  }
+
                 else  {
                     HashMap<String,String> mapuse=new HashMap<>();
                     mapuse.put("username",ctel);
@@ -154,7 +156,9 @@ public class registerActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(StringTemp);
                                 JSONArray results = jsonObject.getJSONArray("code");
                                 codeReturn1=results.getString(0);
-                                if(codeReturn1.equals("验证码过期")||codeReturn1.equals("验证码错误"))
+                                if(ctest==null)
+                                    Toast.makeText(registerActivity.this,"请正确输入验证码",Toast.LENGTH_LONG).show();
+                                else if(codeReturn1.equals("验证码过期")||codeReturn1.equals("验证码错误"))
                                 Toast.makeText(registerActivity.this,codeReturn1,Toast.LENGTH_LONG).show();
                                 else {
                                     Toast.makeText(registerActivity.this,"注册成功",Toast.LENGTH_LONG).show();
