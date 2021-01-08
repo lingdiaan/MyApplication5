@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -104,6 +105,13 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
     private ClusterManager<MyItem> mClusterManager;
     private String id;
     public static GeoCoderDemo geoCoderDemo = null;
+    private float localZoom;
+    private  BaiduMap.OnMarkerClickListener onMarkerClickListener;
+    private List<Marker> markers = new ArrayList<>();
+    private float x;
+
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,15 +131,10 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         my = (Button)findViewById(R.id.my);
         mEditGeoCodeKey = (AutoCompleteTextView) findViewById(R.id.geocodekey);
         mSugListView = (ListView) findViewById(R.id.sug_list);
-
-
-
-
-
         // 初始化建议搜索模块，注册建议搜索事件监听
         mSuggestionSearch = SuggestionSearch.newInstance();
         mSuggestionSearch.setOnGetSuggestionResultListener(this);
-
+        requestPermission();
         mEditGeoCodeKey.setThreshold(1);
         mEditGeoCodeKey.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +177,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
               startActivity(intent);
           }
       });
+
 
         // 地图初始化
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -229,18 +233,20 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
             @Override
             public boolean onClusterItemClick(MyItem item) {
-                endlatLng = item.getPosition();
-                System.out.println(endlatLng+"222222222222222222");
-                final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
-                sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
-                Bundle budle = new Bundle();
-                budle.putDouble("经度",endlatLng.latitude);
-                budle.putDouble("纬度", endlatLng.longitude);
-                intent.putExtras(budle);
-                double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
+//                endlatLng = item.getPosition();
+//                System.out.println(endlatLng+"222222222222222222");
+//                final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
+//                sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
+//                Bundle budle = new Bundle();
+//                budle.putDouble("经度",endlatLng.latitude);
+//                budle.putDouble("纬度", endlatLng.longitude);
+//                intent.putExtras(budle);
+//                double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
                 return true;
             }
         });
+
+
 
 
 
@@ -259,7 +265,6 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
     }
     /**
      * 地理编码查询结果回调函数
-     *
      * @param result  地理编码查询结果
      */
     @Override
@@ -340,27 +345,42 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
 //
     }
 
-    public void initListener(){
-        System.out.println("-----------------------------------------+++-----");
-        builder = null;
-        builder=new AlertDialog.Builder(this);
+//    public void initListener(){
+//
+//        builder = null;
+//        builder=new AlertDialog.Builder(this);
+//        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+//            public boolean onMarkerClick(final Marker marker) {
+//                endlatLng = marker.getPosition();
+//                final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
+//                Bundle budle = new Bundle();
+//                budle.putDouble("经度",endlatLng.latitude);
+//                budle.putDouble("纬度", endlatLng.longitude);
+//                intent.putExtras(budle);
+//                double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
+//                sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
+//                return true;
+//            }
+//        });
+//    }
+public void initListener(){
 
-        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            public boolean onMarkerClick(final Marker marker) {
-                endlatLng = marker.getPosition();
-                System.out.println(endlatLng+"1111111111111111");
-                final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
-                Bundle budle = new Bundle();
-                budle.putDouble("经度",endlatLng.latitude);
-                budle.putDouble("纬度", endlatLng.longitude);
-                intent.putExtras(budle);
-                double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
-                sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
-                return true;
-            }
-        });
-    }
-
+    builder = null;
+    builder=new AlertDialog.Builder(this);
+    onMarkerClickListener = marker -> {
+        endlatLng = marker.getPosition();
+        System.out.println("position================>"+endlatLng);
+        final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
+        Bundle budle = new Bundle();
+        budle.putDouble("经度",endlatLng.latitude);
+        budle.putDouble("纬度", endlatLng.longitude);
+        intent.putExtras(budle);
+        double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
+        sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
+        return true;
+    };
+    mBaiduMap.setOnMarkerClickListener(onMarkerClickListener);
+}
     private void addPoiLoction(LatLng latLng){
         mBaiduMap.clear();
         showPoiDetailView(false);
@@ -385,6 +405,14 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
 
         }
     }
+
+
+
+
+
+
+
+
 
     /**
      * 定位功能
@@ -415,47 +443,154 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
 //                MapStatus.Builder builder = new MapStatus.Builder();
 //                builder.target(startlatLng).zoom(15);
                 mMapStatus = new MapStatus.Builder().zoom(15).target(startlatLng).build();
+                localZoom=mBaiduMap.getMapStatus().zoom;
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mMapStatus));
 
-                sendRequestWithOkHttpGetMark(location.getLatitude(),location.getAltitude());
+//                sendRequestWithOkHttpGetMark(location.getLatitude(),location.getLongitude(),localZoom);
+                mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
+                    @Override
+                    public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+
+
+                    }
+
+                    @Override
+                    public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
+
+                    }
+
+                    @Override
+                    public void onMapStatusChange(MapStatus mapStatus) {
+
+
+                    }
+
+                    @Override
+                    public void onMapStatusChangeFinish(MapStatus mapStatus) {
+                        float zoom = mBaiduMap.getMapStatus().zoom;
+                        //根据获取到的地图中心点(图标地点)坐标获取地址
+                        LatLng ptCenter = mapStatus.target;
+                        System.out.println("zoom======>"+ptCenter);
+                        System.out.println("zoom======>"+zoom);
+                        if (zoom!=localZoom){
+                            mBaiduMap.clear();
+                            sendRequestWithOkHttpGetMark(startlatLng.latitude,startlatLng.longitude,zoom);
+                            localZoom =zoom;
+
+                        }
+
+                    }
+                });
             }
             }
         }
 
-    private void sendRequestWithOkHttpGetMark(final double lat, final double lon) {
+    private void sendRequestWithOkHttpGetMark(final double lat, final double lon,float localZoom) {
+        if(localZoom>17.5)
+            localZoom= (float) 17.5;
+        else if(localZoom<14.5)
+            localZoom= (float) 14.5;
+        x= (float) (0.3*(int)localZoom-4.25);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int j=1;
+
                 try {
-
-
+                    mBaiduMap.clear();
+                    mBaiduMap.removeMarkerClickListener(onMarkerClickListener);
+                    System.out.println("执行了clearMap");
                         OkHttpClient client = new OkHttpClient();//创建一个OkHttp实例
-                        Request request = new Request.Builder().get().url("https://api.ohaiyo.vip/parkinglot/?page_size=99999999").build();
+                        Request request = new Request.Builder().get().url("https://api.ohaiyo.vip/parkinglot/?bd_latitude_max="+(lat+0.018)+"&bd_latitude_min="+(lat-0.018)+"&bd_longitude_max="+(lon+0.022)+"&bd_longitude_min="+(lon-0.022)+"&page_size=99999999").build();
                         Response response = client.newCall(request).execute();//创建call对象并调用execute获取返回的数据
                         String responseData = response.body().string();
                         JSONObject jsonObject = new JSONObject(responseData);
                         JSONArray results = jsonObject.getJSONArray("results");//得到键为results的JSONArray
                         List<MyItem> items = new ArrayList<MyItem>();
+                        int count=0;
+                        double[] latNum = new double[results.length()];
+                        double[] lonNum = new double[results.length()];
+                        int[] counts = new int[results.length()];
                         for (int i = 0; i < results.length(); i++) {
                             JSONObject obj = results.getJSONObject(i);
-                            double lat = obj.getDouble("bd_latitude");
-                            double lon = obj.getDouble("bd_longitude");
+                            latNum[i]  = obj.getDouble("bd_latitude");
+                            lonNum[i]  = obj.getDouble("bd_longitude");
                              //                String name = obj.getString("name");
+                            counts[i] = obj.getInt("space_num");
                             //定义Maker坐标点
-                            LatLng point = new LatLng(lat, lon);
+//                            LatLng point = new LatLng(lat, lon);
 
-                            //构建MarkerOption，用于在地图上添加Marker
-                            OverlayOptions option = new MarkerOptions()
-                                    .position(point)
-                                    .icon(mbitmap).clickable(true).perspective(true);
-                            items.add(new MyItem(point));
-                            //在地图上添加Marker，并显示
-                            mBaiduMap.addOverlay(option);
-//                            mClusterManager.addItems(items);
+//                            if(j>(float) Math.random()) {
+//                                //构建MarkerOption，用于在地图上添加Marker
+//
+//                                OverlayOptions option = new MarkerOptions()
+//                                        .position(point)
+//                                        .icon(mbitmap).clickable(true).perspective(true).zIndex(4);
+//                                items.add(new MyItem(point));
+//
+//
+//                                //在地图上添加Marker，并显示
+//                                Marker marker = (Marker) mBaiduMap.addOverlay(option);
+//
+//                                markers.add(marker);
+//                                count++;
+//
+//                            }
+                        }
+                    for(int yi=0;yi<counts.length-1;yi++)
+                    {
+                        for(int er=0;er<counts.length-1-i;er++)
+                        {
+                            if(counts[er]>counts[er+1])
+                            {
+                                int temp=counts[er];
+                                counts[er]=counts[er+1];
+                                counts[er+1]=temp;
 
+                                double temp1=latNum[er];
+                                latNum[er]=latNum[er+1];
+                                latNum[er+1]=temp1;
+
+                                double temp2=latNum[er];
+                                latNum[er]=latNum[er+1];
+                                latNum[er+1]=temp2;
+
+                            }
+                        }
+                    }
+                    if(x>1)
+                        x=1;
+                    else if(x<0.3)
+                        x=(float) 0.3;
+                    for(int i=0;i<counts.length;i++) {
+                        System.out.println("counts=============================>"+counts[i]);
+                    }
+
+                    for(int i=results.length()-1;i>results.length()*(1-x);i--){
+                        double latnow = latNum[i];
+                        double lonnow = lonNum[i];
+                        LatLng point = new LatLng(latnow, lonnow);
+
+                                //构建MarkerOption，用于在地图上添加Marker
+
+                                OverlayOptions option = new MarkerOptions()
+                                        .position(point)
+                                        .icon(mbitmap).clickable(true).perspective(true).zIndex(4);
+                                items.add(new MyItem(point));
+                                //在地图上添加Marker，并显示
+                        Marker marker = (Marker) mBaiduMap.addOverlay(option);
+
+                        markers.add(marker);
+
+                    }
+
+
+                        for(Marker marker : markers){
+                            marker.setScale((float)0.7);
 
                         }
+
+//                    mClusterManager.addItems(items);
                     initListener();
 
                         System.out.println(mClusterManager);
@@ -475,11 +610,11 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
             @Override
 
             public void run() {
-                System.out.println("断点6");
+
                 try {
                     OkHttpClient client = new OkHttpClient();//创建一个OkHttp实例
                     System.out.println(lat+","+lon);
-                    Request request = new Request.Builder().get().url("https://api.ohaiyo.vip/parkinglot/?bd_longitude_max="+(lon+0.001)+"&bd_longitude_min="+(lon-0.001)+"&bd_latitude_max="+(lat+0.0001)+"&bd_latitude_min="+(lat-0.0001)).build();//创建Request对象发起请求,记得替换成你自己的key
+                    Request request = new Request.Builder().get().url("https://api.ohaiyo.vip/parkinglot/?bd_longitude_max="+(lon+0.00001)+"&bd_longitude_min="+(lon-0.00001)+"&bd_latitude_max="+(lat+0.00001)+"&bd_latitude_min="+(lat-0.00001)).build();//创建Request对象发起请求,记得替换成你自己的key
                     Response response = client.newCall(request).execute();//创建call对象并调用execute获取返回的数据
                     String responseData = response.body().string();
                     parseJSONWithJSONObject(responseData);//解析SSON数据
@@ -496,6 +631,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
             JSONObject jsonObject = new JSONObject(jsonData);
             name = null;
             spacenum=null;
+            System.out.println(jsonData);
 
             JSONArray results = jsonObject.getJSONArray("results");//得到键为results的JSONArray
            JSONObject obj = (JSONObject)results.opt(0);
@@ -554,7 +690,6 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
                             bundle.putString("name",id);
                             intent.putExtras(bundle);
                             startActivity(intent);
-                            System.out.println(bundle+"bbbbbbbbbbbuuuuuuuuuuuuuuunnnnnnnnnnnnnnnnnnnddddddddddddddddddddddd");
                         }
 
                     }
@@ -591,6 +726,35 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         // 在activity执行onDestroy时必须调用mMapView. onDestroy ()
         mMapView.onDestroy();
 //        mSuggestionSearch.destroy();
+    }
+
+    private boolean isPermissionRequested;
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= 23 && !isPermissionRequested) {
+            isPermissionRequested = true;
+            ArrayList<String> permissionsList = new ArrayList<>();
+            String[] permissions = {
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+            };
+
+            for (String perm : permissions) {
+                if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm)) {
+                    permissionsList.add(perm);
+                    // 进入到这里代表没有权限.
+                }
+            }
+
+            if (!permissionsList.isEmpty()) {
+                String[] strings = new String[permissionsList.size()];
+                requestPermissions(permissionsList.toArray(strings), 0);
+            }
+        }
     }
 
 

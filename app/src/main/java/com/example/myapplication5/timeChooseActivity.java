@@ -43,8 +43,10 @@ import okhttp3.Response;
 public class timeChooseActivity extends Activity {
     private int hour;
     private int minute;
-    private String startHour,startMin,startYear,startMonth,startDay;
-    private String endHour,endMin,endYear,endMonth,endDay;
+    private String startHour,startMin;
+    private int startYear,startMonth,startDay;
+    private String endHour,endMin;
+    private int endYear,endMonth,endDay;
     private String dateStr;
     private EditText edStart,edEnd;
     private AlertDialog dialog,dialog1;
@@ -135,15 +137,15 @@ public class timeChooseActivity extends Activity {
                     public void onClick(View v) {
                         dialog.dismiss();
                         Calendar cal = Calendar.getInstance();
-                        int year = cal.get(Calendar.YEAR);
-                        int month = cal.get(Calendar.MONTH);
-                        int day = cal.get(Calendar.DAY_OF_MONTH);
+                        startYear = cal.get(Calendar.YEAR);
+                        startMonth = cal.get(Calendar.MONTH);
+                        startDay = cal.get(Calendar.DAY_OF_MONTH);
 
                         DatePickerDialog dialog = new DatePickerDialog(
                                 timeChooseActivity.this,
                                 android.R.style.Theme_Holo_Dialog_MinWidth,
                                 mStartDateSetListener,
-                                year, month, day);
+                                startYear, startMonth, startDay);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();
 
@@ -196,15 +198,16 @@ public class timeChooseActivity extends Activity {
                     public void onClick(View v) {
                         dialog.dismiss();
                         Calendar cal = Calendar.getInstance();
-                        int year = cal.get(Calendar.YEAR);
-                        int month = cal.get(Calendar.MONTH);
-                        int day = cal.get(Calendar.DAY_OF_MONTH);
+                        endYear = cal.get(Calendar.YEAR);
+                        endMonth = cal.get(Calendar.MONTH);
+                        endDay = cal.get(Calendar.DAY_OF_MONTH);
+                        System.out.println(endYear+"---"+endMonth+"----"+endDay);
 
                         DatePickerDialog dialog = new DatePickerDialog(
                                 timeChooseActivity.this,
                                 android.R.style.Theme_Holo_Dialog_MinWidth,
                                 mEndDateSetListener,
-                                year, month, day);
+                                endYear, endMonth, endDay);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();
 
@@ -225,16 +228,34 @@ public class timeChooseActivity extends Activity {
             @Override
             public void onClick(View v) {
                 System.out.println("提交");
+                if(endHour!=null&&startHour!=null&&endMin!=null&&startMin!=null){
                 int hour = Integer.parseInt(endHour)-Integer.parseInt(startHour);
                 int minute = Integer.parseInt(endMin)-Integer.parseInt(startMin);
-                System.out.println(hour+"----"+minute);
-                if(hour<0&&minute<0||hour<=-1)
+                String endString[] = edEnd.getText().toString().split("-");
+                String startString[] = edStart.getText().toString().split("-");
+                int year = Integer.valueOf(endString[0])-Integer.valueOf(startString[0]);
+                int month = Integer.valueOf(endString[1])-Integer.valueOf(startString[1]);
+                    String endDay[] = endString[2].split(" ");
+                    String startDay[] = startString[2].split(" ");
+                int day = Integer.valueOf(endDay[0])-Integer.valueOf(startDay[0]);
+                    System.out.println(year+"----"+month+"-----"+day);
+                if(year<0||(year==0&&month<0)||(year==0&&month==0&&day<0)){
+                    Toast.makeText(timeChooseActivity.this,"时间选择错误",Toast.LENGTH_LONG).show();
+
+                }
+
+                else if(year==0&&month==0&&day==0&&hour<0&&minute<0)
                     Toast.makeText(timeChooseActivity.this,"时间选择错误",Toast.LENGTH_LONG).show();
                 else if(minute<0){
                     hour -=-1;
                     minute +=60;
                 }
-                else if(carnum.length()<7||ChineseNum(carnum)>1||ChineseNum(carnum)==0||AbcNum(carnum)==0){
+
+                else if(carNum.getText().toString().length()!=7||ChineseNum(carNum.getText().toString())!=1||ChineseNum(carNum.getText().toString())==0||AbcNum(carNum.getText().toString())==0){
+                    System.out.println(carNum.getText().toString().length()!=7);
+                    System.out.println(ChineseNum(carNum.getText().toString())!=1);
+                    System.out.println(ChineseNum(carNum.getText().toString())==0);
+                    System.out.println(AbcNum(carNum.getText().toString())==0);
                     Toast.makeText(timeChooseActivity.this,"请输入正确格式的车牌号",Toast.LENGTH_SHORT).show();
 
                 }
@@ -285,6 +306,9 @@ public class timeChooseActivity extends Activity {
 
                     }
                 }
+            else {
+                Toast.makeText(timeChooseActivity.this,"请正确输入时间",Toast.LENGTH_LONG).show();
+                }}
 //            }
         });
 //        List<String> list = new ArrayList<>();
@@ -458,7 +482,7 @@ public class timeChooseActivity extends Activity {
         char[] ch = str.toCharArray();
         int count = 0;
         for(char c : ch){
-            if(c>'a'&&c<'z')
+            if(c>='A'&&c<='Z')
                 count++;
 
 

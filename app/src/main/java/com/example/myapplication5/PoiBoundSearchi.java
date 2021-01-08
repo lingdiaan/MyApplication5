@@ -72,6 +72,8 @@ public class PoiBoundSearchi extends AppCompatActivity {
     private LatLng endlatLng;
     private String price;
 
+
+
     /**
      * 定位SDK核心类
      */
