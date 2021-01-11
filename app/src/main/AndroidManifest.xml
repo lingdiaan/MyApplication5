@@ -68,6 +68,7 @@
         <activity android:name="com.example.myapplication5.myActivity"></activity>
         <activity android:name="com.example.myapplication5.timeChooseActivity"></activity>
         <activity android:name="com.example.myapplication5.MarkerDemo"></activity>
+        <activity android:name="com.example.myapplication5.PoiBoundSearch"></activity>
         <activity android:name="com.example.myapplication5.PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"

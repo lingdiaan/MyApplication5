@@ -252,10 +252,7 @@ public class timeChooseActivity extends Activity {
                 }
 
                 else if(carNum.getText().toString().length()!=7||ChineseNum(carNum.getText().toString())!=1||ChineseNum(carNum.getText().toString())==0||AbcNum(carNum.getText().toString())==0){
-                    System.out.println(carNum.getText().toString().length()!=7);
-                    System.out.println(ChineseNum(carNum.getText().toString())!=1);
-                    System.out.println(ChineseNum(carNum.getText().toString())==0);
-                    System.out.println(AbcNum(carNum.getText().toString())==0);
+
                     Toast.makeText(timeChooseActivity.this,"请输入正确格式的车牌号",Toast.LENGTH_SHORT).show();
 
                 }

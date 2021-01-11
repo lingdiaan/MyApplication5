@@ -80,7 +80,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
     private MapView mMapView = null;
     private EditText mEditCity;
     private AutoCompleteTextView mEditGeoCodeKey;
-    private BitmapDescriptor mbitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
+    private BitmapDescriptor mbitmap = BitmapDescriptorFactory.fromResource(R.drawable.park_markp);
     private ListView mPoiList;
     private List<PoiInfo> mAllPoi;
     private PoiSearch mPoiSearch = null;
@@ -109,6 +109,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
     private  BaiduMap.OnMarkerClickListener onMarkerClickListener;
     private List<Marker> markers = new ArrayList<>();
     private float x;
+    private float suofang;
 
 
 
@@ -233,15 +234,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
             @Override
             public boolean onClusterItemClick(MyItem item) {
-//                endlatLng = item.getPosition();
-//                System.out.println(endlatLng+"222222222222222222");
-//                final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
-//                sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
-//                Bundle budle = new Bundle();
-//                budle.putDouble("经度",endlatLng.latitude);
-//                budle.putDouble("纬度", endlatLng.longitude);
-//                intent.putExtras(budle);
-//                double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
+
                 return true;
             }
         });
@@ -275,7 +268,8 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         }
         String strInfo = String.format("纬度：%f 经度：%f", result.getLocation().latitude, result.getLocation().longitude);
        //Toast.makeText(GeoCoderDemo.this, strInfo, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(GeoCoderDemo.this,PoiBoundSearchi.class);
+//        Intent intent = new Intent(GeoCoderDemo.this,PoiBoundSearchi.class);
+        Intent intent = new Intent(GeoCoderDemo.this,PoiBoundSearch.class);
         Bundle bundle = new Bundle();
         bundle.putString("位置",strInfo);
         bundle.putDouble("纬度",result.getLocation().latitude);
@@ -492,6 +486,7 @@ public void initListener(){
         else if(localZoom<14.5)
             localZoom= (float) 14.5;
         x= (float) (0.3*(int)localZoom-4.25);
+        suofang = (float)(((float)localZoom)*0.16-1.62);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -586,7 +581,7 @@ public void initListener(){
 
 
                         for(Marker marker : markers){
-                            marker.setScale((float)0.7);
+                            marker.setScale(suofang);
 
                         }
 
