@@ -83,6 +83,9 @@ private boolean isFirstLoc;
     private LocationClient locationClient;
     private double jingdustart,weidustart;
     private  double n1,n2;
+    private Button drive;
+    private DrivingRouteResult resultBeg=null;
+    private LatLng oldLatLon=null;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -93,6 +96,13 @@ private boolean isFirstLoc;
         n2 = bundle.getDouble("纬度");
         PoiName = bundle.getString("位置");
         System.out.println("PoiName====================>"+PoiName);
+        drive = (Button)findViewById(R.id.drive);
+        drive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchRoute();
+            }
+        });
 
         mEditStartCity = (EditText) findViewById(R.id.st_city);
        // mStrartNodeView = (AutoCompleteTextView) findViewById(R.id.st_node);
@@ -103,13 +113,11 @@ private boolean isFirstLoc;
         mTrafficPolicyCB = (CheckBox) findViewById(R.id.traffic);
         juli = (TextView) findViewById(R.id.juli);
         end.setText(PoiName);
-
         // 初始化UI相关
         mBtnPre = (Button) findViewById(R.id.pre);
         mBtnNext = (Button) findViewById(R.id.next);
         mBtnPre.setVisibility(View.INVISIBLE);
         mBtnNext.setVisibility(View.INVISIBLE);
-
         mMapView = (MapView) findViewById(R.id.map);
         // 初始化地图
         mBaidumap = mMapView.getMap();
@@ -120,7 +128,6 @@ private boolean isFirstLoc;
         mSearch.setOnGetRoutePlanResultListener(this);
         // 初始化驾车路线相关策略view
         mSpinner = (Spinner) findViewById(R.id.spinner);
-
         // 开启定位图层
         mBaidumap.setMyLocationEnabled(true);
         //声明定位SDK核心类
@@ -128,7 +135,6 @@ private boolean isFirstLoc;
         //注册监听
         locationClient.registerLocationListener(mListener);
         //定位配置信息
-
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
@@ -159,8 +165,6 @@ private boolean isFirstLoc;
         adapter.setDropDownViewResource(R.layout.spinner_item_vict);
         mSpinner.setAdapter(adapter);
         initViewListener();
-
-
     }
     private BDAbstractLocationListener mListener = new BDAbstractLocationListener() {
 
@@ -169,13 +173,17 @@ private boolean isFirstLoc;
             // TODO Auto-generated method stub
             double c1 = location.getLatitude();
             double e1 = location.getLongitude();
+            LatLng newLatLon = new LatLng(c1,e1);
             m1 = c1;
             m2 = e1;
             start.setText("当前位置");
 
+
         }
 
     };
+
+
 
 
 
@@ -225,9 +233,6 @@ public void searchButtonProcess(View v){
         //清除之前覆盖物
         mBaidumap.clear();
         //获取Bundle信息
-
-    System.out.println(n1+"================"+n2);
-
         LatLng latLng = new LatLng(n1,n2);
         LatLng latLng1 = new LatLng(m1,m2);
 
@@ -250,7 +255,35 @@ public void searchButtonProcess(View v){
 
 
     }
+public void searchRoute(){
+    //重置浏览节点的路线数据
+    mRouteLine = null;
+    mBtnNext.setVisibility(View.INVISIBLE);
+    mBtnPre.setVisibility(View.INVISIBLE);
+    //清除之前覆盖物
+    mBaidumap.clear();
+    //获取Bundle信息
+    LatLng latLng = new LatLng(n1,n2);
+    LatLng latLng1 = new LatLng(m1,m2);
 
+    //设置节点信息
+    // PlanNode startNode = PlanNode.withCityNameAndPlaceName(mEditStartCity.getText().toString().trim(), mStrartNodeView.getText().toString().trim());
+    PlanNode startNode = PlanNode.withLocation(latLng1);
+    //设置终点参数
+    // PlanNode endNode =   PlanNode.withCityNameAndPlaceName(mEditEndCity.getText().toString().trim(), mEndNodeView.getText().toString().trim());
+    PlanNode endNode = PlanNode.withLocation(latLng);
+    //是否开启路况
+    if(mTrafficPolicyCB.isChecked()){
+        //开启路况
+        mDrivingRoutePlanOption.trafficPolicy(DrivingRoutePlanOption.DrivingTrafficPolicy.ROUTE_PATH_AND_TRAFFIC);
+    }else{
+        //关闭路况
+        mDrivingRoutePlanOption.trafficPolicy(DrivingRoutePlanOption.DrivingTrafficPolicy.ROUTE_PATH);
+    }
+    //开始路线规划
+    mSearch.drivingSearch(mDrivingRoutePlanOption.from(startNode).to(endNode));
+
+}
 
 
     @Override
@@ -283,6 +316,10 @@ public void searchButtonProcess(View v){
 
     @Override
     public void onGetDrivingRouteResult(DrivingRouteResult result) {
+        if(resultBeg==null||result.getRouteLines()!=resultBeg.getRouteLines()){
+            System.out.println("result================>"+result);
+            System.out.println("resultbeg=============>"+resultBeg);
+            resultBeg=result;
         if (result != null && result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
             // result.getSuggestAddrInfo()
@@ -291,7 +328,13 @@ public void searchButtonProcess(View v){
         }
         if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
             Toast.makeText(DrivingRoutSearch1.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            if(result == null)
+                Toast.makeText(DrivingRoutSearch1.this, "result == null", Toast.LENGTH_SHORT).show();
+            if(result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND)
+                Toast.makeText(DrivingRoutSearch1.this, "result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND", Toast.LENGTH_SHORT).show();
             return;
+
+
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
             int duration = result.getRouteLines().get(0).getDistance();
@@ -344,7 +387,7 @@ public void searchButtonProcess(View v){
             }
         }
 
-    }
+    }}
 
     @Override
     public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {

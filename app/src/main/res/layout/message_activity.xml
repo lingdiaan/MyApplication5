@@ -8,7 +8,7 @@
         android:layout_marginTop="30dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/icon_weixin"></ImageView>
+        android:background="@drawable/pisp"></ImageView>
     <RelativeLayout
         android:layout_marginTop="00dp"
         android:layout_width="match_parent"
@@ -23,13 +23,16 @@
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:text="姓名:"
-                android:textSize="20dp"></TextView>
+                android:textSize="20dp"
+                android:textColor="@color/dkgray"></TextView>
             <EditText
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/edit_background"
+                android:textColor="@color/dkgray"
+                android:textSize="18dp"
                 ></EditText></LinearLayout>
         <LinearLayout
             android:layout_below="@+id/fir"
@@ -42,10 +45,13 @@
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:text="号码:"
+                android:textColor="@color/dkgray"
                 android:textSize="20dp"></TextView>
             <EditText
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/tel"
+                android:textColor="@color/dkgray"
+                android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/edit_background"
@@ -61,12 +67,15 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="40dp"
+                android:textColor="@color/dkgray"
                 android:text="车牌号:"
                 android:textSize="20dp"></TextView>
             <EditText
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/num"
                 android:layout_width="match_parent"
+                android:textColor="@color/dkgray"
+                android:textSize="18dp"
                 android:layout_height="40dp"
                 android:background="@drawable/edit_background"
                 ></EditText>
@@ -82,12 +91,15 @@
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:text="性别:"
+            android:textColor="@color/dkgray"
             android:textSize="20dp"></TextView>
         <EditText
             android:layout_gravity="center_horizontal"
             android:id="@+id/gender"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:textColor="@color/dkgray"
+            android:textSize="18dp"
             android:background="@drawable/edit_background"
             ></EditText>
 
@@ -102,12 +114,15 @@
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:text="邮箱:"
+            android:textColor="@color/dkgray"
             android:textSize="20dp"></TextView>
         <EditText
             android:layout_gravity="center_horizontal"
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:textColor="@color/dkgray"
+            android:textSize="18dp"
             android:background="@drawable/edit_background"
             ></EditText>
 
@@ -123,15 +138,18 @@
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:text="生日:"
+            android:textColor="@color/dkgray"
             android:textSize="20dp"></TextView>
         <TextView
             android:layout_gravity="center_horizontal"
             android:id="@+id/birth"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:textColor="@color/dkgray"
+
             android:background="@drawable/edit_background"
             android:text=""
-            android:textSize="20dp"
+            android:textSize="18dp"
 
 
             ></TextView></LinearLayout>

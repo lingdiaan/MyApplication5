@@ -14,14 +14,14 @@
         android:padding="15dp"
         android:text="请根据需要从中选择路线"
         android:layout_gravity="center_horizontal"
-        android:textColor="#00ffff" />
+        android:textColor="@color/dkgray" />
 
     <ListView
         android:id="@+id/transitList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
 
-        android:divider="#00ffff"
+        android:divider="@color/dkgray"
         android:dividerHeight="1px"
         android:padding="15dp"/>
 

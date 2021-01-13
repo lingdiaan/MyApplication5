@@ -4,10 +4,13 @@
     android:layout_height="match_parent">
     <TextView
 
-
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="我的订单"></TextView>
+        android:text="我的订单:"
+        android:textColor="@color/dkgray"
+        android:textSize="25dp"></TextView>
 
     <ListView
 

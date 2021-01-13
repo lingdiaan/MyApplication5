@@ -2,51 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="101dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="150dp"
-        android:background="@mipmap/ic_launcher"
-        android:layout_marginTop="80dp"></ImageView>
+        android:layout_marginTop="80dp"
+        android:background="@drawable/pisp"></ImageView>
+</RelativeLayout>
+
     <RelativeLayout
+        android:layout_width="326dp"
+        android:layout_height="171dp"
         android:layout_marginLeft="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="50dp">
 
         <LinearLayout
-            android:layout_marginTop="30dp"
+            android:id="@+id/one"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_background">
 
             <EditText
+
                 android:id="@+id/username"
                 android:layout_width="282dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/edit_background"
-                android:hint="  userName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+
+                android:hint="userName"
                 android:textSize="20dp"></EditText>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="100dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/one">
+
+            <LinearLayout
+                android:id="@+id/pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_background">
 
 
-            <EditText
-                android:id="@+id/psw"
-                android:layout_width="282dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:hint="  passWord"
-                android:background="@drawable/edit_background"
-                android:inputType="textPassword"
-                android:textSize="20dp"></EditText>
+                <EditText
+                    android:id="@+id/psw"
+                    android:layout_width="284dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+
+                    android:background="@drawable/edit_background"
+                    android:hint="passWord"
+                    android:inputType="textPassword"
+                    android:textSize="20dp"></EditText>
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/change"
                 android:layout_width="20dp"
-                android:layout_height="20dp"></Button>
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/see_able"></Button>
         </LinearLayout>
 
 
@@ -64,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
-
+            android:textColor="@color/dkgray"
             android:background="@drawable/edit_background"
             android:text="登录"
             android:textSize="15dp"></Button>

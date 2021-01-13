@@ -3,10 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="150dp"
-        android:background="@mipmap/ic_launcher"
+        android:background="@drawable/pisp"
         android:layout_marginTop="80dp"></ImageView>
     <RelativeLayout
         android:layout_marginLeft="20dp"
@@ -21,13 +21,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="手机："
-                android:textSize="15dp"></TextView>
+                android:text="手机号码："
+                android:textSize="15dp"
+                android:textColor="@color/dkgray"></TextView>
 
             <EditText
                 android:id="@+id/tel"
-                android:layout_marginLeft="30dp"
 
+                android:textColor="@color/dkgray"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:textSize="20dp"></EditText>
@@ -43,7 +44,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <TextView
-
+        android:textColor="@color/dkgray"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="密码："
@@ -51,7 +52,7 @@
 
     <EditText
         android:id="@+id/psw"
-
+        android:textColor="@color/dkgray"
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
@@ -59,6 +60,8 @@
         android:textSize="20dp"
         ></EditText>
             <Button
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/see_able"
                 android:id="@+id/change"
                 android:layout_width="20dp"
                 android:layout_height="20dp"></Button></LinearLayout>
@@ -67,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-
+                android:textColor="@color/dkgray"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="确认密码："
@@ -75,12 +78,14 @@
 
             <EditText
                 android:id="@+id/pswsure"
-
+                android:textColor="@color/dkgray"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
                 android:textSize="20dp"></EditText>
             <Button
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/see_able"
                 android:id="@+id/changeSure"
                 android:layout_width="20dp"
                 android:layout_height="20dp"></Button></LinearLayout>
@@ -89,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-
+                android:textColor="@color/dkgray"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="验证码："
@@ -98,7 +103,7 @@
             <EditText
                 android:id="@+id/test"
                 android:layout_marginLeft="15dp"
-
+                android:textColor="@color/dkgray"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:textSize="20dp"></EditText>
@@ -120,7 +125,7 @@
 
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:background="#0000"
+        android:background="@drawable/edit_background"
         android:text="提交"
         android:textSize="15dp"></Button>
 
