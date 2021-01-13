@@ -11,13 +11,21 @@ import com.example.myapplication5.Manage.UserManage;
 
 
 public class myActivity extends AppCompatActivity {
-    private Button massage,exit,order;
+    private Button massage,exit,order,lease;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         massage = (Button)findViewById(R.id.message);
         exit = (Button)findViewById(R.id.exit);
         order = (Button)findViewById(R.id.order) ;
+        lease = (Button)findViewById(R.id.lease);
+        lease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(myActivity.this,LeaseActivity.class);
+                startActivity(intent);
+            }
+        });
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

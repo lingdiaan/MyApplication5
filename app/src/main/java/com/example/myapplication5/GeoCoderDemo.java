@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -110,6 +113,15 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
     private List<Marker> markers = new ArrayList<>();
     private float x;
     private float suofang;
+    private int[] counts;
+    private String[] names;
+    private List<Park> parkList= new ArrayList<>();
+    private String parkName,parkCost,spaceNum;
+    private Handler handler;
+    private Button showList;
+    private double[] latNum;
+    private double[] lonNum;
+    private Marker markerClick;
 
 
 
@@ -119,19 +131,30 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_geocoder);
-        CharSequence titleLable = "停车APP";
+        CharSequence titleLable = "PISP";
         setTitle(titleLable);
+
         geoCoderDemo = this;
         mPoiSearch = PoiSearch.newInstance();
         mEditCity = (EditText) findViewById(R.id.city);
 //        mPoiSearch.setOnGetPoiSearchResultListener(this);
         mPoiDetailView = (RelativeLayout) findViewById(R.id.poi_detail);
         mPoiList = (ListView) findViewById(R.id.poi_list);
-        mPoiList.setOnItemClickListener(this);
+        showList = (Button)findViewById(R.id.show_list);
+        showList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPoiList.setVisibility(view.VISIBLE);
+
+
+            }
+        });
+
 //        find = (Button)findViewById(R.id.find);
         my = (Button)findViewById(R.id.my);
         mEditGeoCodeKey = (AutoCompleteTextView) findViewById(R.id.geocodekey);
         mSugListView = (ListView) findViewById(R.id.sug_list);
+
         // 初始化建议搜索模块，注册建议搜索事件监听
         mSuggestionSearch = SuggestionSearch.newInstance();
         mSuggestionSearch.setOnGetSuggestionResultListener(this);
@@ -193,6 +216,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
             public void onMapClick(LatLng point) {
 //                showPoiDetailView(false);
                 mSugListView.setVisibility(View.GONE);
+                mPoiList.setVisibility(View.GONE);
             }
 
             @Override
@@ -226,7 +250,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
         mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
             @Override
             public boolean onClusterClick(Cluster<MyItem> cluster) {
-                System.out.println("onclick+++++++++++++++++++++++++++++");
+
                 Toast.makeText(GeoCoderDemo.this, "有" + cluster.getSize() + "个停车场", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -238,11 +262,7 @@ public class GeoCoderDemo extends AppCompatActivity implements OnGetGeoCoderResu
                 return true;
             }
         });
-
-
-
-
-
+        handler = new Handler();
     }
 
 
@@ -363,7 +383,6 @@ public void initListener(){
     builder=new AlertDialog.Builder(this);
     onMarkerClickListener = marker -> {
         endlatLng = marker.getPosition();
-        System.out.println("position================>"+endlatLng);
         final Intent intent = new Intent(GeoCoderDemo.this,DrivingRoutSearch1.class);
         Bundle budle = new Bundle();
         budle.putDouble("经度",endlatLng.latitude);
@@ -465,8 +484,6 @@ public void initListener(){
                         float zoom = mBaiduMap.getMapStatus().zoom;
                         //根据获取到的地图中心点(图标地点)坐标获取地址
                         LatLng ptCenter = mapStatus.target;
-                        System.out.println("zoom======>"+ptCenter);
-                        System.out.println("zoom======>"+zoom);
                         if (zoom!=localZoom){
                             mBaiduMap.clear();
                             sendRequestWithOkHttpGetMark(startlatLng.latitude,startlatLng.longitude,zoom);
@@ -490,11 +507,11 @@ public void initListener(){
         new Thread(new Runnable() {
             @Override
             public void run() {
+                parkList.clear();
 
                 try {
                     mBaiduMap.clear();
                     mBaiduMap.removeMarkerClickListener(onMarkerClickListener);
-                    System.out.println("执行了clearMap");
                         OkHttpClient client = new OkHttpClient();//创建一个OkHttp实例
                         Request request = new Request.Builder().get().url("https://api.ohaiyo.vip/parkinglot/?bd_latitude_max="+(lat+0.018)+"&bd_latitude_min="+(lat-0.018)+"&bd_longitude_max="+(lon+0.022)+"&bd_longitude_min="+(lon-0.022)+"&page_size=99999999").build();
                         Response response = client.newCall(request).execute();//创建call对象并调用execute获取返回的数据
@@ -503,38 +520,22 @@ public void initListener(){
                         JSONArray results = jsonObject.getJSONArray("results");//得到键为results的JSONArray
                         List<MyItem> items = new ArrayList<MyItem>();
                         int count=0;
-                        double[] latNum = new double[results.length()];
-                        double[] lonNum = new double[results.length()];
-                        int[] counts = new int[results.length()];
+                        latNum = new double[results.length()];
+                        lonNum = new double[results.length()];
+                        counts = new int[results.length()];
+                        names = new String[results.length()];
                         for (int i = 0; i < results.length(); i++) {
                             JSONObject obj = results.getJSONObject(i);
                             latNum[i]  = obj.getDouble("bd_latitude");
                             lonNum[i]  = obj.getDouble("bd_longitude");
                              //                String name = obj.getString("name");
                             counts[i] = obj.getInt("space_num");
-                            //定义Maker坐标点
-//                            LatLng point = new LatLng(lat, lon);
+                            names[i]=obj.getString("name");
 
-//                            if(j>(float) Math.random()) {
-//                                //构建MarkerOption，用于在地图上添加Marker
-//
-//                                OverlayOptions option = new MarkerOptions()
-//                                        .position(point)
-//                                        .icon(mbitmap).clickable(true).perspective(true).zIndex(4);
-//                                items.add(new MyItem(point));
-//
-//
-//                                //在地图上添加Marker，并显示
-//                                Marker marker = (Marker) mBaiduMap.addOverlay(option);
-//
-//                                markers.add(marker);
-//                                count++;
-//
-//                            }
                         }
                     for(int yi=0;yi<counts.length-1;yi++)
                     {
-                        for(int er=0;er<counts.length-1-i;er++)
+                        for(int er=0;er<counts.length-1-yi;er++)
                         {
                             if(counts[er]>counts[er+1])
                             {
@@ -546,9 +547,13 @@ public void initListener(){
                                 latNum[er]=latNum[er+1];
                                 latNum[er+1]=temp1;
 
-                                double temp2=latNum[er];
-                                latNum[er]=latNum[er+1];
-                                latNum[er+1]=temp2;
+                                double temp2=lonNum[er];
+                                lonNum[er]=lonNum[er+1];
+                                lonNum[er+1]=temp2;
+
+                                String nameTem=names[er];
+                                names[er]=names[er+1];
+                                names[er+1]=nameTem;
 
                             }
                         }
@@ -557,15 +562,13 @@ public void initListener(){
                         x=1;
                     else if(x<0.3)
                         x=(float) 0.3;
-                    for(int i=0;i<counts.length;i++) {
-                        System.out.println("counts=============================>"+counts[i]);
-                    }
-
                     for(int i=results.length()-1;i>results.length()*(1-x);i--){
                         double latnow = latNum[i];
                         double lonnow = lonNum[i];
                         LatLng point = new LatLng(latnow, lonnow);
-
+                        Park park = new Park(names[i],counts[i],latnow,lonnow);
+//                        System.out.println(park);
+                        parkList.add(park);
                                 //构建MarkerOption，用于在地图上添加Marker
 
                                 OverlayOptions option = new MarkerOptions()
@@ -578,17 +581,18 @@ public void initListener(){
                         markers.add(marker);
 
                     }
-
-
                         for(Marker marker : markers){
                             marker.setScale(suofang);
+                            System.out.println(marker.getPosition());
 
                         }
 
+
+
+
 //                    mClusterManager.addItems(items);
                     initListener();
-
-                        System.out.println(mClusterManager);
+                    handler.post(runnableUi1);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -597,7 +601,62 @@ public void initListener(){
                 }
             }
         }).start();
+
+
+
     }
+
+    Runnable runnableUi1=new Runnable(){
+        @Override
+        public void run() {
+            ParkAdapter adapter = new ParkAdapter(GeoCoderDemo.this, R.layout.park_item, parkList);
+            mPoiList = (ListView)findViewById(R.id.poi_list);
+            System.out.println("onclick+++++++++++++++++++++++++++++");
+            System.out.println(adapter.toString());
+            mPoiList.setAdapter(adapter);
+//            System.err.println(parkList);
+            mPoiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(markerClick!=null){
+                        markerClick.setScale(suofang);
+                    }
+                    Park park = parkList.get(position);
+                    System.out.println("onClick Park ===============>"+park);
+                    LatLng parkLat = new LatLng(park.getLat(),park.getLon());
+                    mMapStatus = new MapStatus.Builder()
+                            .target(parkLat)
+                            .zoom(18)
+                            .build();
+                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mMapStatus));
+
+                    for(Marker marker:markers)
+                    if(marker.getPosition().latitude==parkLat.latitude&&marker.getPosition().longitude==parkLat.longitude){
+                        markerClick=marker;
+                        marker.setScale((float) 1.5);
+                        Button button = new Button(getApplicationContext());
+                        button.setBackgroundResource(R.drawable.popup);
+                        button.setText(park.getName());
+
+//构造InfoWindow
+//point 描述的位置点
+//-100 InfoWindow相对于point在y轴的偏移量
+                        InfoWindow mInfoWindow = new InfoWindow(button, parkLat, -200);
+
+//使InfoWindow生效
+                        mBaiduMap.showInfoWindow(mInfoWindow);
+                        System.out.println(marker.getScaleX()+"++++++++++"+marker.getPosition());
+                    }
+
+
+
+                }
+            });
+//更新界面
+
+        }
+
+    };
 
 
     private void sendRequestWithOkHttp(final double lat, final double lon) {
@@ -660,7 +719,7 @@ public void initListener(){
                         Bundle budle = new Bundle();
                         budle.putDouble("经度", endlatLng.latitude);
                         budle.putDouble("纬度", endlatLng.longitude);
-                        budle.putString("位置", PoiName);
+                        budle.putString("位置", name);
                         intent.putExtras(budle);
                         startActivity(intent);
                     }

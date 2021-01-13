@@ -55,6 +55,7 @@ public class timeChooseActivity extends Activity {
     private String name,pri;
     private int id = 1;
     private String addTime;
+    private String trade_no;
 
     /**
      * 用于支付宝支付业务的入参 app_id。
@@ -270,8 +271,8 @@ public class timeChooseActivity extends Activity {
                     HashMap<String,String> mapOrder=new HashMap<>();
 //                    payV2("25");
                         System.out.println("共停留"+hour+"小时"+minute+ "分钟"+",需消费"+allPrice+"元");
-                    int trade_no = (int)(Math.random()*1000000+1);
-                    mapOrder.put("trade_no", String.valueOf(trade_no));
+//                    int trade_no = (int)(Math.random()*1000000+1);
+//                    mapOrder.put("trade_no", String.valueOf(trade_no));
 //                    mapOrder.put("post_script",name);
                     mapOrder.put("post_script","123456");
                     mapOrder.put("order_mount",pri);
@@ -281,10 +282,10 @@ public class timeChooseActivity extends Activity {
                     try{
                         Thread.sleep(2000);
                     }catch (InterruptedException e) {}
-
+                    int id = (int)(Math.random()*1000000+1);
                     HashMap<String,String> mapReserved = new HashMap();
-                    mapReserved.put("trade_no",String.valueOf(trade_no));
-                    mapReserved.put("id",String.valueOf(trade_no));
+                    mapReserved.put("trade_no",trade_no);
+                    mapReserved.put("id",String.valueOf(id));
                     mapReserved.put("car_num",carnum);
                     mapReserved.put("status","outside");
                     mapReserved.put("in_time",edStart.getText().toString());
@@ -439,7 +440,10 @@ public class timeChooseActivity extends Activity {
                         try {
                             JSONObject jsonObject = new JSONObject(stringTemp);
                             addTime = jsonObject.getString("add_time");
-                            System.out.println("addTime"+addTime);
+                            trade_no=jsonObject.getString("trade_no");
+                            System.out.println("addTime"+addTime+"trade_no==============>"+trade_no);
+                            try{
+                            Thread.sleep(1000);}catch (Exception e){}
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

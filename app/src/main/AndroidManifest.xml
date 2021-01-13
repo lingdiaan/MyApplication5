@@ -41,7 +41,7 @@
 
         android:allowBackup="true"
         android:icon="@mipmap/ic_icon"
-        android:label="停车"
+        android:label="PISP"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -55,6 +55,7 @@
 
         </activity>
         <activity android:name="com.example.myapplication5.PoiBoundSearchi"></activity>
+        <activity android:name="com.example.myapplication5.LeaseActivity"/>
         <activity android:name="com.example.myapplication5.MarkActivity"></activity>
         <activity android:name="com.example.myapplication5.GeoCoderDemo"></activity>
         <activity android:name="com.example.myapplication5.just"></activity>

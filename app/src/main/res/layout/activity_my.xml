@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             android:text="我的订单"
             android:background="@color/white"></Button>
+        <Button
+            android:id="@+id/lease"
+            android:layout_below="@+id/order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="出租车位"
+            android:background="@color/white"></Button>
     </RelativeLayout>
 
     <Button

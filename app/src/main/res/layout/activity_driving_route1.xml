@@ -29,19 +29,24 @@
             android:layout_height="wrap_content"
             android:text="起点:"
             />
+
         <TextView
             android:id="@+id/st_node"
-            android:layout_width="wrap_content"
+            android:layout_width="179dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.88"
-            android:text=""
-         />
+
+            android:background="@drawable/edit_background"
+            android:singleLine="true"
+            android:lines="1"
+            android:text="" />
         <TextView
 
-        android:layout_width="30dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
             android:text="距离："
-            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#000"
+
 
         />
         <TextView
@@ -60,8 +65,8 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="城市:"
            />
 
@@ -69,8 +74,7 @@
             android:id="@+id/ed_city"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="长春"
-            />
+            android:text="长春" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,10 +84,12 @@
 
         <TextView
             android:id="@+id/ed_node"
-            android:layout_width="0dp"
+            android:layout_width="179dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.88"
+            android:singleLine="true"
+            android:lines="1"
             android:text=""
+            android:background="@drawable/edit_background"
              />
 
         <Button

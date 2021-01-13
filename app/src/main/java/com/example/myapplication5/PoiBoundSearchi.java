@@ -67,10 +67,19 @@ public class PoiBoundSearchi extends AppCompatActivity {
     private int i = 0;
     private Marker mMarkerA,mMarkerB;
     private LatLng startlatLng;
-    private BitmapDescriptor mBitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_markb);
+    private BitmapDescriptor mBitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);
     private  LatLng latLng;
     private LatLng endlatLng;
     private String price;
+
+
+    private float localZoom;
+    private  BaiduMap.OnMarkerClickListener onMarkerClickListener;
+    private List<Marker> markers = new ArrayList<>();
+    private float x;
+    private float suofang;
+    private MapStatus mMapStatus;
+    private String id,name;
 
 
 
@@ -150,7 +159,7 @@ public class PoiBoundSearchi extends AppCompatActivity {
 
 
 
-   private class MyPoiOverlay extends PoiOverlay {
+    private class MyPoiOverlay extends PoiOverlay {
 
         public MyPoiOverlay(BaiduMap baiduMap) {
             super(baiduMap);
@@ -161,7 +170,7 @@ public class PoiBoundSearchi extends AppCompatActivity {
             PoiInfo poi = getPoiResult().getAllPoi().get(index);
             PoiName = poi.name;
             //计算距离
-            builder.setIcon(R.drawable.popup);//设置图标
+            builder.setIcon(R.drawable.park_markp);//设置图标
             builder.setTitle("停车场信息:"+PoiName).setMessage(sb.toString());//设置对话框的标题
             builder.setPositiveButton("导航", new DialogInterface.OnClickListener(){  //这个是设置确定按钮
                 @Override
@@ -195,8 +204,8 @@ public class PoiBoundSearchi extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString(price,"price");
                         bundle.putString(PoiName,"name");
-                    Intent intent = new Intent(PoiBoundSearchi.this,timeChooseActivity.class);
-                    startActivity(intent,bundle);}
+                        Intent intent = new Intent(PoiBoundSearchi.this,timeChooseActivity.class);
+                        startActivity(intent,bundle);}
 
 
                 }
@@ -275,31 +284,31 @@ public class PoiBoundSearchi extends AppCompatActivity {
         }
     };
 
-   //设置弹窗信息
-   public void initListener(){
+    //设置弹窗信息
+    public void initListener(){
         builder = null;
         builder=new AlertDialog.Builder(this);
-       mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-    @Override
-    public boolean onMarkerClick(final Marker marker) {
-        Toast.makeText(PoiBoundSearchi.this,"当前所在位置",Toast.LENGTH_SHORT);
-        endlatLng = marker.getPosition();
-        //String weizhi = marker.getTitle();
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                Toast.makeText(PoiBoundSearchi.this,"当前所在位置",Toast.LENGTH_SHORT);
+                endlatLng = marker.getPosition();
+                //String weizhi = marker.getTitle();
 
-        double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
-        double dis2 = DistanceUtil. getDistance(latLng, endlatLng);
-        sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
-        sb = new StringBuilder();
-        sb.append( "收费标准："+i+++"元/小时").append("\n");
-        if(dis<1000){
-        sb.append( "距离："+(int)dis+"米").append("\n");}
-        else{sb.append( "距离："+(int)dis/1000+"Km").append("\n");}
-        sb.append("剩余车位数："+spacenum+"个").append("\n");
-        sb.append("目标位置距停车场"+(int)dis2+"米").append("\n");
-         return true;
+                double dis = DistanceUtil. getDistance(startlatLng, endlatLng);
+                double dis2 = DistanceUtil. getDistance(latLng, endlatLng);
+                sendRequestWithOkHttp(endlatLng.latitude,endlatLng.longitude);
+                sb = new StringBuilder();
+                sb.append( "收费标准："+i+++"元/小时").append("\n");
+                if(dis<1000){
+                    sb.append( "距离："+(int)dis+"米").append("\n");}
+                else{sb.append( "距离："+(int)dis/1000+"Km").append("\n");}
+                sb.append("剩余车位数："+spacenum+"个").append("\n");
+                sb.append("目标位置距停车场"+(int)dis2+"米").append("\n");
+                return true;
+            }
+        });
     }
-});
-           }
     private class MyLocationListenner implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {

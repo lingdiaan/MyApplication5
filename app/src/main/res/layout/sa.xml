@@ -7,40 +7,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.myapplication5.MainActivity">
 
-    <Button
-        android:id="@+id/send_request"
-        android:text="Send_request"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/send"
-        android:text="123"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:hint="原始JSON数据"
-        android:id="@+id/response"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:hint="city"
-        android:id="@+id/City"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:hint="weather"
-        android:id="@+id/Weather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:hint="temperature"
-        android:id="@+id/Temperature"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:hint="temperature"
-        android:id="@+id/rec"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+   <ListView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/list"/>
 
 </LinearLayout>

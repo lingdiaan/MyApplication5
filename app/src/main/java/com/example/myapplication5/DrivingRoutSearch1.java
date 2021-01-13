@@ -59,6 +59,7 @@ public class DrivingRoutSearch1 extends AppCompatActivity implements OnGetRouteP
 
     // 搜索模块，也可去掉地图模块独立使用
     private RoutePlanSearch mSearch = null;
+    private String PoiName;
 
  //   private BDLocation mLocation = null;
 private boolean isFirstLoc;
@@ -81,10 +82,18 @@ private boolean isFirstLoc;
     private CheckBox mTrafficPolicyCB;
     private LocationClient locationClient;
     private double jingdustart,weidustart;
+    private  double n1,n2;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driving_route1);
+
+        Bundle bundle = getIntent().getExtras();
+        n1=  bundle.getDouble("经度");
+        n2 = bundle.getDouble("纬度");
+        PoiName = bundle.getString("位置");
+        System.out.println("PoiName====================>"+PoiName);
+
         mEditStartCity = (EditText) findViewById(R.id.st_city);
        // mStrartNodeView = (AutoCompleteTextView) findViewById(R.id.st_node);
         start = (TextView)findViewById(R.id.st_node) ;
@@ -93,6 +102,7 @@ private boolean isFirstLoc;
         end = (TextView) findViewById(R.id.ed_node);
         mTrafficPolicyCB = (CheckBox) findViewById(R.id.traffic);
         juli = (TextView) findViewById(R.id.juli);
+        end.setText(PoiName);
 
         // 初始化UI相关
         mBtnPre = (Button) findViewById(R.id.pre);
@@ -126,15 +136,7 @@ private boolean isFirstLoc;
         locationClient.setLocOption(option);
         //开启定位
         locationClient.start();
-
        //存储终点信息
-        Bundle bundle = getIntent().getExtras();
-        double n1=  bundle.getDouble("经度");
-        double n2 = bundle.getDouble("纬度");
-
-       String weizhi = bundle.getString("位置");
-       end.setText(weizhi);
-
         LatLng latLng = new LatLng(n1,n2);
         //构建Marker图标
         BitmapDescriptor bitmap = BitmapDescriptorFactory
@@ -158,6 +160,7 @@ private boolean isFirstLoc;
         mSpinner.setAdapter(adapter);
         initViewListener();
 
+
     }
     private BDAbstractLocationListener mListener = new BDAbstractLocationListener() {
 
@@ -168,7 +171,7 @@ private boolean isFirstLoc;
             double e1 = location.getLongitude();
             m1 = c1;
             m2 = e1;
-            start.setText(c1+","+e1);
+            start.setText("当前位置");
 
         }
 
@@ -213,7 +216,8 @@ private boolean isFirstLoc;
             }
         });
     }
-    public void searchButtonProcess(View v){
+//    public void searchButtonProcess(View v){
+public void searchButtonProcess(View v){
         //重置浏览节点的路线数据
         mRouteLine = null;
         mBtnNext.setVisibility(View.INVISIBLE);
@@ -221,10 +225,9 @@ private boolean isFirstLoc;
         //清除之前覆盖物
         mBaidumap.clear();
         //获取Bundle信息
-       Bundle bundle = getIntent().getExtras();
-        double n1=  bundle.getDouble("经度");
-        double n2 = bundle.getDouble("纬度");
-        String weizhi = bundle.getString("weizhi");
+
+    System.out.println(n1+"================"+n2);
+
         LatLng latLng = new LatLng(n1,n2);
         LatLng latLng1 = new LatLng(m1,m2);
 
@@ -406,6 +409,9 @@ private boolean isFirstLoc;
         mBaidumap.clear();
         mMapView.onDestroy();
     }
+
+
+
 }
 
 
